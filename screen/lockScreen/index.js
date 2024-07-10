@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {View, Text, StyleSheet, ScrollView, Dimensions, FlatList,Touchable, TouchableOpacity, Image} from 'react-native'
 
 const {width , height} = Dimensions.get('window')
  const dialPadSize = width*.2
  const dialPadSizeh = height*.2
-const dialPad = [1,2,3,4,5,6,7,8,9,"",0,'del']
+const dialPad = [1,2,3,4,5,6,7,8,9,"ss" ,0,'del']
 const pinLength = 6;
 function LockScreen() {
+    const [pincode, setPincode] = useState([])
+
+    // dailpad
     const DialPad = ()=>{
         return (
             <View style={{height: 420 }}>
@@ -20,18 +23,27 @@ function LockScreen() {
                 renderItem={
                     ({item})=>{
                         return(
+                            
+                                // (item ==='del'|| item ==="ss") ? <View style={{
+                                //     width: dialPadSize,
+                                //     height: dialPadSize,
+                                    
+                                //     alignItems: "center",
+                                  
+                                //     justifyContent:'center'}}></View>:
                             <TouchableOpacity onPress={()=>(alert(item))} disabled={item === ""}>
                                 <View style={{
                                     width: dialPadSize,
                                     height: dialPadSize,
-                                    borderRadius: dialPadSize/2,
-                                    borderWidth:1,
+                                  
+                            
                                     alignItems: "center",
                                   
                                     justifyContent:'center'
                                 }}> 
                                 {item === 'del'? <Image  style={{width: dialPadSize/2,
-                                    height: dialPadSize/2}} source={require('../../assets/delete.png')} />: <Text style={{
+                                    height: dialPadSize/2}} source={require('../../assets/delete.png')} />:item === 'ss'? <Image  style={{width: dialPadSize/2,
+                                        height: dialPadSize/2}} source={require('../../assets/fingerprint.png')} />: <Text style={{
                                         fontSize: 20,
                                         color: 'black'
                                     }}>{item}</Text>}
@@ -58,6 +70,31 @@ function LockScreen() {
             textAlign: "center",
             color: "black"
     }}>Login with Passcode</Text>
+    <View style={{
+        flexDirection: 'row',
+        gap:20,
+        marginBottom:40,
+        height:30,
+        alignItems: 'flex-end'
+    }}>
+        {
+            [...Array(pinLength).keys()].map((index)=>{
+                const isSelected = !!pincode[index]
+                return(
+                    <View
+                    key={index}
+                    style={{
+                        width: 22,
+                        height: isSelected?22:2,
+                        borderRadius:22,
+                        backgroundColor: 'black'
+                    }}
+                    />
+                )
+            }
+            )
+        }
+    </View>
         <DialPad/>
     </View>
   )
@@ -65,7 +102,3 @@ function LockScreen() {
 
 export default LockScreen
 
-const styles = StyleSheet.create({
-
-    
-})
