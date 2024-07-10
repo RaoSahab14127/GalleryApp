@@ -10,7 +10,7 @@ function LockScreen() {
     const [pincode, setPincode] = useState([])
 
     // dailpad
-    const DialPad = ()=>{
+    const DialPad = ({onPress})=>{
         return (
             <View style={{height: 420 }}>
                 <FlatList
@@ -31,7 +31,7 @@ function LockScreen() {
                                 //     alignItems: "center",
                                   
                                 //     justifyContent:'center'}}></View>:
-                            <TouchableOpacity onPress={()=>(alert(item))} disabled={item === ""}>
+                            <TouchableOpacity onPress={()=>(onPress(item))} disabled={item === ""}>
                                 <View style={{
                                     width: dialPadSize,
                                     height: dialPadSize,
@@ -63,13 +63,15 @@ function LockScreen() {
         alignItems: 'center',
         justifyContent: 'center'
     }} >
+        <Image style={{marginBottom:42, width: dialPadSize,
+                                    height: dialPadSize}} source={require('../../assets/gallery.png')}/>
         <Text style ={{
             fontSize: 24,
             fontWeight: "bold",
             marginBottom:42,
             textAlign: "center",
             color: "black"
-    }}>Login with Passcode</Text>
+    }}>Enter Passcode</Text>
     <View style={{
         flexDirection: 'row',
         gap:20,
@@ -95,7 +97,22 @@ function LockScreen() {
             )
         }
     </View>
-        <DialPad/>
+        <DialPad onPress={(item)=>{
+            if(item==="del"){
+                setPincode(precCode=>precCode.slice(0, pincode.length-1))
+            }
+            if(item==="ss"){
+                alert("FingerPrint Oopen")
+            }
+            else if (typeof item  === "number"){
+                if (pincode.length <= pinLength){
+                setPincode(precCode=>[...precCode, item])
+                console.log(pincode)}
+                else{
+
+                }
+            }
+        }} />
     </View>
   )
 }
