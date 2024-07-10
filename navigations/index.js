@@ -1,28 +1,35 @@
 import React from 'react'
 import Home from '../screen/home';
 import { NavigationContainer } from '@react-navigation/native';
-import {
-    View,Text
-  } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';  
 import LockScreen from '../screen/lockScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // Drawar
 const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
+function HomeGroup() {
+    return (
+        <Stack.Navigator  screenOptions={{headerShown:false}} >
+            <Stack.Screen name='Home' component={Home} />
+        </Stack.Navigator>
+    )
+  }
 function DrawerGroup() {
 
   return (
-    <Drawer.Navigator
+    <Drawer.Navigator screenOptions={{ headerTitleAlign: "center"}}
   >
-      <Drawer.Screen name="Feed" component={Home} />
+      <Drawer.Screen name="Gallery" component={HomeGroup} />
 
     </Drawer.Navigator>
   );
 }
+
 function Navigations() {
  
     return (
     <NavigationContainer>
-        {true? <LockScreen/> : <DrawerGroup/>}
+        {false? <LockScreen/> : <DrawerGroup/>}
     </NavigationContainer>
   )
 }
