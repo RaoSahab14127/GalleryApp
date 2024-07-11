@@ -6,7 +6,9 @@
  */
 
 import React from 'react';
+import configureStores from './store/index'
 import Navigations from './navigations';
+import {Provider} from 'react-redux'
 import {
   View,Text
 } from 'react-native';
@@ -15,7 +17,8 @@ import {
 function App(){
 
   return (
-    <Navigations/>
+    <Provider store = {configureStores}>
+    <Navigations/></Provider>
   );
 }
 
