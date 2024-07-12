@@ -13,11 +13,12 @@ import {
   View,Text
 } from 'react-native';
 
+import { store } from './store'
 
 function App(){
 
   return (
-    <Provider store = {configureStores}>
+<Provider store= {store}>
     <Navigations/></Provider>
   );
 }

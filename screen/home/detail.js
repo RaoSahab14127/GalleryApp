@@ -7,7 +7,7 @@ function Gallerydetail({navigation}) {
   const dialPadSize = width * 0.2;
   const route = useRoute();
   const pics = route.params?.pics;
-  console.log(pics);
+
   return (
     <View
       style={{

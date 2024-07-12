@@ -7,6 +7,13 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Gallerydetail from '../screen/home/detail';
 import {Image, Pressable} from 'react-native';
 import FScreen from '../screen/home/FScreen';
+import {useSelector, useDispatch} from 'react-redux';
+import {decrement} from '../store/counterSlice.js';
+import {
+  DrawerContentScrollView,
+  DrawerItem,
+  DrawerItemList,
+} from '@react-navigation/drawer';
 // Drawar
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -41,18 +48,35 @@ function HomeGroup({navigation}) {
     </Stack.Navigator>
   );
 }
+function CustomDrawerContent(props) {
+  const auth = useSelector(state => state.auth.value);
+  const dispatch = useDispatch();
+  const handleLogin = () => {
+    dispatch(decrement());
+    console.log(auth);
+  };
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <DrawerItem label="Log Out" onPress={() => handleLogin()} />
+    </DrawerContentScrollView>
+  );
+}
 function DrawerGroup() {
   return (
-    <Drawer.Navigator screenOptions={{headerShown: false}}>
+    <Drawer.Navigator
+      screenOptions={{headerShown: false}}
+      drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen name="Main" component={HomeGroup} />
     </Drawer.Navigator>
   );
 }
 
 function Navigations() {
+  const auth = useSelector(state => state.auth.value);
   return (
     <NavigationContainer>
-      {true ? <LockScreen /> : <DrawerGroup />}
+      {auth ? <DrawerGroup /> : <LockScreen />}
     </NavigationContainer>
   );
 }

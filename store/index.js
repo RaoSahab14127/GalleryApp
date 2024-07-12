@@ -5,28 +5,34 @@
 // })
 // export const store = createStore(RootReducers)
 
-import { persistReducer } from "redux-persist";
-import {configureStore} from '@reduxjs/toolkit'
-import { persistStore } from "redux-persist";
-import {RootReducer} from './reducers';
-import { thunk } from "redux-thunk";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { applyMiddleware, createStore } from 'redux';
-const persistConfig = {
-    key: 'root',
-    storage: AsyncStorage,
-}
+// import {persistReducer} from 'redux-persist';
+// import {configureStore} from '@reduxjs/toolkit';
+// import {persistStore} from 'redux-persist';
+// import {RootReducer} from './reducers';
+// import {thunk} from 'redux-thunk';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+// import {applyMiddleware, createStore} from 'redux';
+// const persistConfig = {
+//   key: 'root',
+//   storage: AsyncStorage,
+// };
 
-const persistedReducer = persistReducer(persistConfig, RootReducer)
+// const persistedReducer = persistReducer(persistConfig, RootReducer);
 
-var middlewares = [thunk]
+// var middlewares = [thunk];
 
-const store = createStore(persistedReducer, applyMiddleware(...middlewares));
+// const store = createStore(persistedReducer, applyMiddleware(...middlewares));
 
-let persistor = persistStore(store)
+// const configureStores = () => {
+//   return {store};
+// };
 
-const configureStores = () => {
-    return {persistor, store};
-  };
-  
-  export default configureStores;
+// export default configureStores;
+import {configureStore} from '@reduxjs/toolkit';
+import counterReducer from '../store/counterSlice';
+
+export const store = configureStore({
+  reducer: {
+    auth: counterReducer,
+  },
+});
